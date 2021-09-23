@@ -12,12 +12,15 @@ namespace WebApplication17.Controllers
     [Route("api/ropa")]
     public class RopaController : Controller
     {
+        //Inyeccion por dependencia del servicio.
         private readonly IGenericService<Ropa> _service;
         public RopaController(IGenericService<Ropa> service)
         {
             _service = service;
         }
-
+        
+        //api/ropa
+        //Metodo para mostrar todos los registros de la base de datos
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ropa>>> GetAll()
         {
@@ -32,6 +35,8 @@ namespace WebApplication17.Controllers
             }           
         }
 
+        //api/ropa/id
+        //Metodo para mostrar un registro de la base de datos filtrando por su ID.
         [HttpGet("{id}")]
         public async Task<ActionResult<Ropa>> GetOne(int id)
         {
@@ -46,6 +51,8 @@ namespace WebApplication17.Controllers
             
         }
 
+        //api/ropa
+        //Metodo para Crear un registro en la base de datos
         [HttpPost]
         public async Task<ActionResult> CreateOne(Ropa model)
         {
@@ -53,6 +60,8 @@ namespace WebApplication17.Controllers
             return StatusCode(201, new { message = "Se creo el registro en base la datos" });
         }
 
+        //api/ropa/id
+        //Metodo para actualizar un registro en la base de datos se filtra por el ID
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateOne(int id, Ropa model)
         {
@@ -69,6 +78,8 @@ namespace WebApplication17.Controllers
             }
         }
 
+        //api/ropa/id
+        //Metodo para eliminar un registro de la base de datos filtrando por el ID. 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteOne(int id)
         {
