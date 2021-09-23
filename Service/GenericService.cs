@@ -8,11 +8,14 @@ namespace WebApplication17.Service
 {
     public class GenericService<T> : IGenericService<T> where T : Models.Ropa
     {
+        //Inyeccion de dependencia del repositorio
         private readonly IGenericRepository<T> _repo;
         public GenericService(IGenericRepository<T> repo)
         {
             _repo = repo;
         }
+        
+        //Metodo para actualizar el registro en la base de datos
         public async Task Actualizar(T model)
         {
             if (!(await this.LeerUno(model.ID) == null))
@@ -25,19 +28,21 @@ namespace WebApplication17.Service
             }
             
         }
-
+        
+        //Metodo para borrar un registro de la base de datos filtrado por ID
         public async Task Borrar(int id)
         {
             var model = await this.LeerUno(id);
             await _repo.Delete(model);             
         }
-
+        
+        //Metotodo para crear un registro en la base de datos
         public async Task Crear(T model)
         {
             await _repo.Create(model);
         }
 
-
+        //Metodo para traer un registro de la base de datos filtrando por ID
         public async Task<T> LeerUno(int id)
         {
             var model = await _repo.ReadOne(id);
@@ -51,6 +56,7 @@ namespace WebApplication17.Service
             
         }
         
+        //Metodo para traer todos los registros de la base de datos
         public async Task<IEnumerable<T>> Leer()
         {
             var modelos = await _repo.Read();
