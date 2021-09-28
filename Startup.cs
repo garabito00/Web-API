@@ -33,7 +33,10 @@ namespace WebApplication17
             services.AddDbContext<RopaContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
-
+            
+            //Agregar Cors
+            services.AddCors(options => options.AddPolicy("AllowWebApp", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -54,7 +57,10 @@ namespace WebApplication17
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
+             //Permitimos el uso de Cors
+            app.UseCors("AllowWebApp");
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
